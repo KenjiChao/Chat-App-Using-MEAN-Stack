@@ -1,11 +1,81 @@
-<!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <title>Real Time Chat App</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="/stylesheets/cover.css" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.1/angular-ui-router.js"></script>
+    <script src="/javascripts/angularApp.js"></script>
+    <style> .glyphicon-thumbs-up { cursor:pointer } </style>
   </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+  <body ng-app="realTimeChatApp">
+    <div ui-view></div>
+
+    <!-- main.html -->
+    <script type="text/ng-template" id="main.html">
+      <div class="site-wrapper">
+        <div class="site-wrapper-inner">
+          <div class="cover-container">
+            <div class="inner cover">
+              <h1 class="cover-heading">{{title}}</h1>
+              <h4 class="lead">{{description}}</h4>
+
+              <form ng-submit="enterRoom()" class="form-signin">
+                <label for="inputUsername" class="sr-only">Username</label>
+                <input id="inputUsername" class="form-control" placeholder="Username" ng-model="username" required autofocus>
+                <br>
+                <button class="btn btn-lg btn-primary" type="submit">Start Chatting</button>
+              </form>
+            </div>
+
+            <div class="mastfoot">
+              <div class="inner">
+                <h4>Copyright &copy; 2016 Kenji Chao</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </script>
+
+    <!-- chat.html -->
+    <script type="text/ng-template" id="chat.html">
+      <div class="site-wrapper">
+        <div class="site-wrapper-inner">
+          <div class="cover-container">
+            <div class="inner cover">
+              <h1 class="cover-heading">Welcome {{username}}</h1>
+            </div>
+
+            <div class="mastfoot">
+              <div class="inner">
+                <h4>Copyright &copy; 2016 Kenji Chao</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </script>
+
+    <!-- template.html -->
+    <script type="text/ng-template" id="template.html">
+      <div class="site-wrapper">
+        <div class="site-wrapper-inner">
+          <div class="cover-container">
+            <div class="inner cover">
+              <h1 class="cover-heading">Welcome to Template</h1>
+            </div>
+
+            <div class="mastfoot">
+              <div class="inner">
+                <h4>Copyright &copy; 2016 Kenji Chao</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </script>
+
   </body>
 </html>
