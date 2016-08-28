@@ -30,9 +30,44 @@ app.factory('currentUser', function() {
   return o;
 });
 
+app.factory('messages', function() {
+  var data = {
+    messages:[
+      {user: "Kenji Chao", time: new Date(), text: "How are you?"},
+      {user: "Jessica", time: new Date(), text: "Great!!"}
+    ]
+  };
+  return data;
+});
+
+// construct socket object
+app.factory('socket', function ($rootScope) {
+  var socket = io.connect();
+  return {
+    on: function (eventName, callback) {
+      socket.on(eventName, function () {
+        var args = arguments;
+        $rootScope.$apply(function () {
+          callback.apply(socket, args);
+        });
+      });
+    },
+    emit: function (eventName, data, callback) {
+      socket.emit(eventName, data, function () {
+        var args = arguments;
+        $rootScope.$apply(function () {
+          if (callback) {
+            callback.apply(socket, args);
+          }
+        });
+      })
+    }
+  };
+});
+
 app.controller('mainCtrl', 
 function($scope, $state, currentUser){
-  $scope.title = "Real Time Chat App";
+  $scope.title = "Real Time Chat Application";
   $scope.description = "Please enter your name";
   $scope.enterRoom = function() {
     currentUser.name = $scope.username;
@@ -41,7 +76,20 @@ function($scope, $state, currentUser){
 });
 
 app.controller('chatCtrl',
-function($scope, currentUser){
-  $scope.title = "Chat Room";
+function($scope, currentUser, messages, socket){
+  socket.on('send message', function(msg){
+    $scope.messages.push(msg);
+  });
+
   $scope.username = currentUser.name;
+  $scope.messages = messages.messages;
+  $scope.send = function(){
+    if(!$scope.message || $scope.message === '') { return; }
+    socket.emit('send message', {
+      user: currentUser.name,
+      time: new Date(),
+      text: $scope.message
+    });
+    $scope.message = '';
+  };
 });

@@ -3,7 +3,7 @@
     <title>Real Time Chat App</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link href="/stylesheets/cover.css" rel="stylesheet">
-
+    <link rel="icon" href="/favicon.png">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.1/angular-ui-router.js"></script>
     <script src="/javascripts/angularApp.js"></script>
@@ -44,10 +44,38 @@
       <div class="site-wrapper">
         <div class="site-wrapper-inner">
           <div class="cover-container">
-            <div class="inner cover">
-              <h1 class="cover-heading">Welcome {{username}}</h1>
-            </div>
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                <h2 class="panel-title">{{username}}, Welcome to the Chat Room!!</h2>
+              </div>
+              <div class="panel-body fixed-panel">
+                <ul class="list-group">
+                  <li class="list-group-item" ng-repeat="message in messages">
+                    <h5>
+                    <span class="glyphicon glyphicon-user"></span>
+                      {{message.user}}
+                      <small>{{message.time | date:'yyyy-MM-dd hh:mm:ss a'}}</small>
+                    </h5>
+                    <h6>{{message.text}}</h6>
+                  </li>
+                </ul>
+              </div>
+              <hr/>
+              <div class="inner cover">
+                <form ng-submit="send()">
+                  <div class="form-group">
+                    <input type="text"
+                      class="form-control"
+                      placeholder="Message..."
+                      ng-model="message" required autofocus></input>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Post</button>
+                </form>
+              </div>
+            </div>q
+          </div>
 
+          <div class="cover-container">
             <div class="mastfoot">
               <div class="inner">
                 <h4>Copyright &copy; 2016 Kenji Chao</h4>
@@ -77,5 +105,6 @@
       </div>
     </script>
 
+    <script src="/socket.io-client/socket.io.js"></script>
   </body>
 </html>

@@ -123,6 +123,18 @@ body {
 }
 
 
+.panel {
+  color: #333;
+  text-shadow: 0 0px 0px rgba(0,0,0,.5);
+  text-align: left;
+}
+
+.fixed-panel {
+  min-height: 200;
+  max-height: 370;
+  overflow-y: scroll;
+}
+
 /*
  * Footer
  */
@@ -130,6 +142,7 @@ body {
 .mastfoot {
   color: #999; /* IE8 proofing */
   color: rgba(255,255,255, 1);
+  bottom: 0;
 }
 
 
