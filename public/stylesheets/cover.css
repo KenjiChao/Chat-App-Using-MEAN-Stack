@@ -122,7 +122,6 @@ body {
   font-weight: bold;
 }
 
-
 .panel {
   color: #333;
   text-shadow: 0 0px 0px rgba(0,0,0,.5);
@@ -131,8 +130,15 @@ body {
 
 .fixed-panel {
   min-height: 200;
-  max-height: 370;
   overflow-y: scroll;
+}
+
+.contain-panel {
+  padding: 60px 100px;
+}
+
+.leave-btn {
+  float: right;
 }
 
 /*

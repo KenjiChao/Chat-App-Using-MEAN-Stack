@@ -1,3 +1,9 @@
+// create database
+var mongoose = require('mongoose');
+require('./models/User');
+require('./models/Message');
+mongoose.connect('mongodb://localhost/chatApp');
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
