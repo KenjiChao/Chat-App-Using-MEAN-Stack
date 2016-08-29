@@ -56,7 +56,7 @@ app.factory('socket', function ($rootScope) {
 
 app.factory('api', function($http, $state, socket) {
   var api = {
-    user: { name: 'Kenji Chao', existed: false },
+    user: { name: 'Guest', existed: false },
     messages: []
   };
   api.findUserByName = function() {
@@ -102,7 +102,7 @@ function($scope, api){
 });
 
 app.controller('chatCtrl',
-function($scope, api, socket){
+function($scope, $state, api, socket){
   socket.on('send message', function(message){
     $scope.messages.push(message);
     // var wrappedResult = angular.element(document.getElementsByClassName("fixed-panel"));
@@ -110,6 +110,10 @@ function($scope, api, socket){
     // console.log(wrappedResult);
     // window.scrollTo(0, document.body.scrollHeight);
   });
+
+  if (api.user.name == 'Guest') {
+    $state.go('main');
+  }
 
   $scope.user = api.user;
   $scope.messages = api.messages;
