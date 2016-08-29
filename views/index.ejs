@@ -4,12 +4,12 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link href="/stylesheets/cover.css" rel="stylesheet">
     <link rel="icon" href="/favicon.png">
+
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.1/angular-ui-router.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
-    <script src="https://cdn.rawgit.com/Luegg/angularjs-scroll-glue/master/src/scrollglue.js"></script>
     <script src="/javascripts/angularApp.js"></script>
-    <style> .glyphicon-thumbs-up { cursor:pointer } </style>
   </head>
   <body ng-app="realTimeChatApp">
     <div ui-view></div>
@@ -43,15 +43,15 @@
 
     <!-- chat.html -->
     <script type="text/ng-template" id="chat.html">
-      <div class="site-wrapper" keepScroll>
-        <div class="site-wrapper-inner" keepScroll>
-          <div class="cover-container contain-panel" keepScroll>
+      <div class="site-wrapper">
+        <div class="site-wrapper-inner" >
+          <div class="cover-container" >
             <div class="panel panel-primary">
               <div class="panel-heading">
                 <h2 class="panel-title">{{user.name}}, Welcome to the Chat Room!!</h2>
               </div>
-              <div class="panel-body fixed-panel" id="autoscroll" keep-scroll>
-                <ul class="list-group" scroll-item>
+              <div class="panel-body fixed-panel">
+                <ul class="list-group">
                   <li class="list-group-item" ng-repeat="message in messages">
                     <h5>
                     <span class="glyphicon glyphicon-user"></span>

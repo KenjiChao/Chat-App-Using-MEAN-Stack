@@ -54,13 +54,13 @@ app.factory('socket', function ($rootScope) {
   };
 });
 
-app.factory('api', function($http, $state) {
+app.factory('api', function($http, $state, socket) {
   var api = {
     user: { name: 'Kenji Chao', existed: false },
     messages: []
   };
   api.findUserByName = function() {
-    return $http.get('/users/' + api.user.name)
+    return $http.get('/users/name/' + api.user.name)
               .success(function(data) {
                 api.user.existed = true;
                 api.user.user = data;
@@ -85,6 +85,7 @@ app.factory('api', function($http, $state) {
   api.saveMessage = function(message) {
     return $http.post('/messages', message).success(function(data) {
       // api.messages.push(data);
+      socket.emit('send message', data);
     });
   };
   return api;
@@ -104,19 +105,20 @@ app.controller('chatCtrl',
 function($scope, api, socket){
   socket.on('send message', function(message){
     $scope.messages.push(message);
+    // var wrappedResult = angular.element(document.getElementsByClassName("fixed-panel"));
+    // wrappedResult.scrollTop = wrappedResult.scrollHeight;
+    // console.log(wrappedResult);
+    // window.scrollTo(0, document.body.scrollHeight);
   });
 
   $scope.user = api.user;
   $scope.messages = api.messages;
   $scope.send = function(){
-    var e = angular.element(document.querySelector('#keep-bottom'));
-    e.scrollTop = e.scrollHeight;
     if(!$scope.message || $scope.message === '') { return; }
     var message = {
       content: $scope.message,
       user: api.user.user
     };
-    socket.emit('send message', message);
     api.saveMessage(message);
     $scope.message = '';
   };

@@ -130,6 +130,7 @@ body {
 
 .fixed-panel {
   min-height: 200;
+  max-height: 370;
   overflow-y: scroll;
 }
 

@@ -8,7 +8,7 @@ var Message = mongoose.model('Message');
 router.param('username', function(req, res, next, name) {
   User.findOne({'name': name}, 'name date', function(err, user) {
     if (err) return next(err);
-    if (!user) return next(new Error('can\'t find user'));
+    if (!user) return next(new Error('can\'t find user by name'));
     req.user = user;
     return next();
   });
@@ -21,7 +21,7 @@ router.param('user', function(req, res, next, id) {
     if (err) { return next(err); }
     if (!comment) { return next(new Error('can\'t find user')); }
 
-    req.user = user;
+    req.user = comment;
     return next();
   });
 });
@@ -34,6 +34,10 @@ router.get('/users', function(req, res, next) {
   });
 });
 
+router.get('/users/:user', function(req, res, next) {
+  res.json(req.user);
+});
+
 router.post('/users', function(req, res, next) {
   var user = new User(req.body);
 
@@ -44,7 +48,7 @@ router.post('/users', function(req, res, next) {
   });
 });
 
-router.get('/users/:username', function(req, res, next) {
+router.get('/users/name/:username', function(req, res, next) {
   res.json(req.user);
 });
 
@@ -57,11 +61,15 @@ router.get('/messages', function(req, res, next) {
 
 router.post('/messages', function(req, res, next) {
   var message = new Message(req.body);
-
+  message.user = req.body.user;
   message.save(function(err, message){
     if(err){ return next(message); }
 
-    res.json(message);
+    User.findById(message.user).exec(function(err, data){
+      if(err) { return next(err); }
+      message.user = data;
+      res.json(message);
+    });
   });
 });
 
