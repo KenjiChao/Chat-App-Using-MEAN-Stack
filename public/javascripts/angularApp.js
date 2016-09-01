@@ -102,13 +102,12 @@ function($scope, api){
 });
 
 app.controller('chatCtrl',
-function($scope, $state, api, socket){
+function($scope, $state, $location, $anchorScroll, api, socket){
   socket.on('send message', function(message){
     $scope.messages.push(message);
-    // var wrappedResult = angular.element(document.getElementsByClassName("fixed-panel"));
-    // wrappedResult.scrollTop = wrappedResult.scrollHeight;
-    // console.log(wrappedResult);
-    // window.scrollTo(0, document.body.scrollHeight);
+
+    $location.hash('panel-end');
+    $anchorScroll();
   });
 
   if (api.user.name == 'Guest') {
@@ -126,4 +125,7 @@ function($scope, $state, api, socket){
     api.saveMessage(message);
     $scope.message = '';
   };
+
+  $location.hash('panel-end');
+  $anchorScroll();
 });
