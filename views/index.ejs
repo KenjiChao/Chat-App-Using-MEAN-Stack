@@ -52,7 +52,7 @@
               </div>
               <div class="panel-body fixed-panel">
                 <ul class="list-group">
-                  <li class="list-group-item" ng-repeat="message in messages">
+                  <li class="list-group-item" ng-repeat="message in messages track by $index">
                     <h5>
                     <span class="glyphicon glyphicon-user"></span>
                       {{message.user.name}}

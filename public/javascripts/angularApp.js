@@ -31,7 +31,7 @@ function($stateProvider, $urlRouterProvider) {
 
 // construct socket object
 app.factory('socket', function ($rootScope) {
-  var socket = io.connect();
+  var socket = io();
   return {
     on: function (eventName, callback) {
       socket.on(eventName, function () {
@@ -106,8 +106,10 @@ function($scope, $state, $location, $anchorScroll, api, socket){
   socket.on('send message', function(message){
     $scope.messages.push(message);
 
-    $location.hash('panel-end');
-    $anchorScroll();
+    setTimeout(function() {
+      $location.hash('panel-end');
+      $anchorScroll();
+    }, 10);
   });
 
   if (api.user.name == 'Guest') {
